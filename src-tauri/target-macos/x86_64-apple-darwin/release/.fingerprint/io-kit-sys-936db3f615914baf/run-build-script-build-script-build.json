@@ -1,0 +1,1 @@
+{"rustc":3720210673988096810,"features":"","declared_features":"","target":0,"profile":0,"path":0,"deps":[[8012288740329278415,"build_script_build",false,14824764451294269514]],"local":[{"Precalculated":"0.4.1"}],"rustflags":["-C","linker-flavor=ld64.lld"],"config":0,"compile_kind":0}

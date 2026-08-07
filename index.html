@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>宠老板</title>
+  <style>
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      padding: 0;
+      margin: 0;
+    }
+
+    .myFrame {
+      width: 100%;
+      height: calc(100% - 30px);
+      vertical-align: bottom;
+    }
+
+    .ant-spin-wrap {
+      width: 18px;
+      height: 18px;
+      display: block;
+      transition: all 1s;
+      margin-left: 5px;
+    }
+
+    .ant-spin {
+      display: flex;
+      flex-flow: column nowrap;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+
+    }
+
+    .ant-spin-dot {
+      position: relative;
+      font-size: 20px;
+      width: 100%;
+      height: 100%;
+    }
+
+    .ant-spin-dot-item {
+      position: absolute;
+      display: block;
+      width: 9px;
+      height: 9px;
+      background: #FFDD03;
+      border-radius: 100%;
+      transform: scale(.75);
+      transform-origin: 50% 50%;
+      opacity: .3;
+      animation-name: css-mxhywb-antSpinMove;
+      animation-duration: 1s;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+      animation-direction: alternate;
+    }
+
+    .ant-spin-dot i {
+      width: 9px;
+      height: 9px;
+    }
+
+    .ant-spin-dot-spin {
+      transform: rotate(45deg);
+      animation-name: css-mxhywb-antRotate;
+      animation-duration: 1.2s;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+    }
+
+    .ant-spin-dot-item:nth-child(1) {
+      top: 0;
+      inset-inline-start: 0;
+    }
+
+    .ant-spin-dot-item:nth-child(2) {
+      top: 0;
+      inset-inline-end: 0;
+      animation-delay: .4s;
+    }
+
+    .ant-spin-dot-item:nth-child(3) {
+      inset-inline-end: 0;
+      bottom: 0;
+      animation-delay: .8s;
+    }
+
+    .ant-spin-dot-item:nth-child(4) {
+      bottom: 0;
+      inset-inline-start: 0;
+      animation-delay: 1.2s;
+    }
+
+    .ant-spin-text {
+      color: #1677ff;
+      font-size: 14px;
+    }
+
+    @keyframes css-mxhywb-antSpinMove {
+      100% {
+        opacity: 1;
+      }
+    }
+
+    @keyframes css-mxhywb-antRotate {
+      100% {
+        transform: rotate(405deg);
+      }
+    }
+    .op-btns-row-wrap{
+      -webkit-app-region: drag;
+    }
+    .op-btns-row {
+      width: 100%;
+      background: #F7F7F7;
+      padding: 5px 20px;
+      box-sizing: border-box;
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: flex-start;
+      align-items: center;      
+    }
+
+    .op-btn-wrap {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+      transition: all 0.3s;
+      -webkit-app-region: no-drag;
+    }
+
+    .switch-qh {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-left: 5px;
+    }
+
+    .op-btns-row .op-btn-wrap:active {
+      transform: scale(0.8);
+    }
+
+    .op-btns-row .goback {
+      margin-right: 5px;
+    }
+
+    .op-btns-row .freshen {
+      margin-left: 15px;
+    }
+
+    .op-btn-pic {
+      width: 20px;
+      height: 20px;
+      display: block;
+    }
+
+    .op-btn-qh-pic {
+      width: 18px;
+      height: 18px;
+      display: block;
+    }
+
+    .switch-lines {
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      position: fixed;
+      top: 0px;
+      left: 0px;
+      z-index: 999;
+      display: none;
+      animation: changeBg 0.6s;
+    }
+
+    .switch-lines-wrap {
+      width: 436px;
+      /* height: 454px; */
+      background: #FFFFFF;
+      border-radius: 6px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 999;
+      overflow: hidden;
+      animation: changeSize 0.2s;
+    }
+
+    .switch-lines-wrap-top {
+      width: 100%;
+      height: 105px;
+      background: #FFDD03;
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .switch-lines-wrap-top-pic {
+      width: 236px;
+      height: 78px;
+    }
+
+    .switch-lines-wrap-bottom {
+      padding: 19px 0px 20px 64px;
+      box-sizing: border-box;
+    }
+
+    .switch-lines-wrap-bottom-item {
+      font-size: 16px;
+      font-family: PingFangSC-Medium, PingFang SC;
+      font-weight: 600;
+      color: #411E14;
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: flex-start;
+      align-items: center;
+    }
+
+    .switch-lines-wrap-bottom-item-left {
+      width: 80px;
+      text-align: justify;
+      text-align-last: justify;
+      line-height: 44px;
+    }
+
+    .switch-lines-wrap-bottom-item-right {
+      margin-left: 8px;
+      line-height: 44px;
+    }
+
+    .switch-lines-wrap-bottom-item-drop {
+      width: 210px;
+      height: 37px;
+      background: #FFFFFF;
+      border-radius: 4px;
+      border: 1px solid #DDDDDD;
+      padding: 9px 13px 9px 26px;
+      box-sizing: border-box;
+      font-size: 14px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 600;
+      color: #411E14;
+      margin-left: 8px;
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .switch-scale-wrap-bottom-item-drop{
+      width: 210px;
+      height: 37px;
+      background: #FFFFFF;
+      border-radius: 4px;
+      border: 1px solid #DDDDDD;
+      padding: 9px 13px 9px 26px;
+      box-sizing: border-box;
+      font-size: 14px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 600;
+      color: #411E14;
+      margin-left: 8px;
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .item-drop-icon {
+      width: 10px;
+      height: 6px;
+      transition: all 0.6s;
+    }
+    .item-scale-icon{
+      width: 10px;
+      height: 6px;
+      transition: all 0.6s;
+    }
+    .switch-lines-wrap-bottom-item-sub {
+      width: 210px;
+      background: #FFFFFF;
+      border-radius: 4px;
+      border: 1px solid #DDDDDD;
+      font-size: 14px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 600;
+      color: #411E14;
+      margin-left: 93px;
+      box-sizing: border-box;
+      display: none;
+    }
+    .switch-scale-wrap-bottom-item-sub{
+      width: 210px;
+      background: #FFFFFF;
+      border-radius: 4px;
+      border: 1px solid #DDDDDD;
+      font-size: 14px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 600;
+      color: #411E14;
+      margin-left: 93px;
+      box-sizing: border-box;
+      display: none;
+    }
+    .switch-lines-item {
+      text-align: left;
+      height: 31px;
+      line-height: 31px;
+      cursor: pointer;
+      padding: 0px 13px 0px 30px;
+      /* box-sizing: border-box; */
+    }
+
+    .switch-lines-wrap-bottom-item-sub .switch-lines-item:hover {
+      background: #FFF39F;
+    }
+    .switch-scale-wrap-bottom-item-sub .switch-lines-item:hover {
+      background: #FFF39F;
+    }
+    .switch-bottom-copyright {
+      font-size: 12px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 400;
+      color: #411E14;
+      line-height: 22px;
+    }
+
+
+    @keyframes changeBg {
+      0% {
+        background: rgba(0, 0, 0, 0);
+      }
+
+      100% {
+        background: rgba(0, 0, 0, 0.6);
+      }
+    }
+
+    @keyframes changeSize {
+      0% {
+        left: 100%;
+        top: 0%;
+      }
+
+      100% {
+        left: 50%;
+        top: 50%;
+      }
+    }
+    .op-btns-row-right{
+      flex: 1;
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: flex-end;
+      align-items: center;
+    }
+    .ck-op{
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+    }
+    .ck-op-pic{
+      width: 18px;
+      height: 18px;
+      display: block;
+    }
+  </style>
+</head>
+
+<body>  
+  <div class="op-btns-row-wrap">
+    <div class="op-btns-row">
+      <div class="op-btn-wrap goback">
+        <img src="./pics/icon_left.png" alt="" class="op-btn-pic">
+      </div>
+      <div class="op-btn-wrap gonext">
+        <img src="./pics/icon_right.png" alt="" class="op-btn-pic">
+      </div>
+      <div class="op-btn-wrap freshen">
+        <img src="./pics/icon_refresh.png" alt="" class="op-btn-pic">
+      </div>      
+      <div class="ant-spin-wrap">
+        <div class="ant-spin">
+          <div class="ant-spin-dot ant-spin-dot-spin">
+            <i class="ant-spin-dot-item"></i>
+            <i class="ant-spin-dot-item"></i>
+            <i class="ant-spin-dot-item"></i>
+            <i class="ant-spin-dot-item"></i>
+          </div>
+          <!-- <div class="ant-spin-text">Loading...</div> -->
+        </div>
+      </div>
+      <div class="op-btns-row-right">
+        <div class="op-btn-wrap switch-qh">
+          <img src="./pics/icon_qh.png" alt="" class="op-btn-qh-pic">
+        </div>
+        <div class="op-btn-wrap ck-op" style="margin-left:5px;" onclick="miniMyapp()">
+          <img src="./pics/icon_sx.png" alt="" class="ck-op-pic">
+        </div>
+        <div class="op-btn-wrap ck-op" style="margin-left:5px;" onclick="toogleMyapp()">
+          <img src="./pics/icon_fd.png" alt="" class="ck-op-pic">
+        </div>
+        <div class="op-btn-wrap ck-op" style="margin-left:5px;" onclick="closeMyapp()">
+          <img src="./pics/icon_close.png" alt="" class="ck-op-pic">
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--  -->
+  <iframe src="" class="myFrame" frameborder="0" scrolling="no" ></iframe>
+
+  <!-- loading -->
+
+
+
+  <div class="switch-lines">
+    <div class="switch-lines-wrap">
+      <div class="switch-lines-wrap-top">
+        <img src="./pics/logo_and_text.png" alt="" class="switch-lines-wrap-top-pic">
+      </div>
+      <div class="switch-lines-wrap-bottom">
+        <div class="switch-lines-wrap-bottom-item">
+          <div class="switch-lines-wrap-bottom-item-left">版本号</div>
+          <div>:</div>
+          <div class="switch-lines-wrap-bottom-item-right">1.0.0</div>
+        </div>
+        <div class="switch-lines-wrap-bottom-item">
+          <div class="switch-lines-wrap-bottom-item-left">系统官网</div>
+          <div>:</div>
+          <div class="switch-lines-wrap-bottom-item-right">www.chonglaoban.cn</div>
+        </div>
+        <div class="switch-lines-wrap-bottom-item">
+          <div class="switch-lines-wrap-bottom-item-left">客服热线</div>
+          <div>:</div>
+          <div class="switch-lines-wrap-bottom-item-right">4000-285-785</div>
+        </div>
+        <div class="switch-lines-wrap-bottom-item">
+          <div class="switch-lines-wrap-bottom-item-left">线路选择</div>
+          <div>:</div>
+          <div class="switch-lines-wrap-bottom-item-drop">
+            <span class="drop-line-name">v7.0线路一</span>
+            <img src="./pics/drop_icon.png" alt="" class="item-drop-icon">
+          </div>
+          <div class="switch-lines-wrap-bottom-item-sub" style="display: none;">
+            <div class="switch-lines-item" onclick="chooseLines(1)">v7.0线路一</div>
+            <div class="switch-lines-item" onclick="chooseLines(2)">v7.0线路二</div>
+            <div class="switch-lines-item" onclick="chooseLines(3)">v7.0线路三</div>
+            <div class="switch-lines-item" onclick="chooseLines(13)">v7.0海外线路</div>
+            <div class="switch-lines-item" onclick="chooseLines(4)">v6.0线路一</div>
+            <div class="switch-lines-item" onclick="chooseLines(5)">v6.0线路二</div>
+            <div class="switch-lines-item" onclick="chooseLines(6)">v6.0线路三</div>
+            <!--  -->
+            <!-- <div class="switch-lines-item" onclick="chooseLines(7)">测试服70</div>
+            <div class="switch-lines-item" onclick="chooseLines(8)">测试服60</div>
+            <div class="switch-lines-item" onclick="chooseLines(9)">t66</div>
+            <div class="switch-lines-item" onclick="chooseLines(10)">v110</div>
+            <div class="switch-lines-item" onclick="chooseLines(11)">localhost</div>
+            <div class="switch-lines-item" onclick="chooseLines(12)">https-v7.0</div> -->
+            <!--  -->
+          </div>
+        </div>
+        <!--  -->
+        <div class="switch-lines-wrap-bottom-item">
+          <div class="switch-lines-wrap-bottom-item-left">缩放比例</div>
+          <div>:</div>
+          <div class="switch-scale-wrap-bottom-item-drop">
+            <span class="drop-scale-name">v7.0线路一</span>
+            <img src="./pics/drop_icon.png" alt="" class="item-scale-icon">
+          </div>
+          <div class="switch-scale-wrap-bottom-item-sub" style="display: none;">
+            <div class="switch-lines-item" onclick="chooseScale('-0.75')">-50%</div>
+            <div class="switch-lines-item" onclick="chooseScale('-0.50')">-70%</div>
+            <div class="switch-lines-item" onclick="chooseScale('0')">100%</div>
+            <div class="switch-lines-item" onclick="chooseScale('0.25')">125%</div>
+            <div class="switch-lines-item" onclick="chooseScale('0.50')">150%</div>                     
+          </div>
+        </div>
+        <!--  -->
+        <div class="switch-bottom-copyright">
+          <div style="margin-left: 42px;margin-top: 20px;">上海尊宠网络科技有限公司 版权所有</div>
+          <div>Copyright © 2016-2023 宠老板 Inc.Alll Rights Reserved</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="./utils/md5code.js"></script>
+  <script src="./utils/axios.min.js"></script>
+  <script src="./renderer.js"></script>
+  <script>
+    // document.querySelector(".myFrame").onload = function () {
+    //   document.querySelector(".ant-spin-wrap").style.display = "none"
+    // }
+
+    // setTimeout(()=>{
+    //   document.querySelector(".ant-spin-wrap").style.display = "none"
+    // },6000)
+    
+  </script>
+</body>
+
+</html>

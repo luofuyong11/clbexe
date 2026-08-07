@@ -1,0 +1,21 @@
+[package]
+name = "printer-native"
+version = "1.0.0"
+edition = "2021"
+description = "Native printing module for Electron"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+napi = { version = "2.16", features = ["napi4"] }
+napi-derive = "2.16"
+serialport = "4.3"
+escpos = { version = "0.4", features = ["graphics"] }
+image = { version = "0.24", default-features = false, features = ["png"] }
+
+[target.'cfg(windows)'.dependencies]
+winapi = { version = "0.3", features = ["winspool", "wingdi", "windef"] }
+
+[build-dependencies]
+napi-build = "2.0"

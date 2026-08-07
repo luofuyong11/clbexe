@@ -1,0 +1,2 @@
+# Darwin cross-linker settings are injected by scripts/build-rust.js
+# only when building macOS targets from a Windows host.
