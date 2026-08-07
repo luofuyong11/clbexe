@@ -36,27 +36,27 @@ function handleInitLines() {
         lineNameEl.innerText = "v6.0线路三"
         myFrame.src = "http://f6.chonglaoban.cn/"
     }
-    // 
-    // else if (currLine == 7) {
-    //     lineNameEl.innerText = "测试服70"
-    //     myFrame.src = "http://testv63.chonglaoban.com.cn/"
-    // }
+    
+    else if (currLine == 7) {
+        lineNameEl.innerText = "测试服70"
+        myFrame.src = "http://testv63.chonglaoban.com.cn/"
+    }
     // else if (currLine == 8) {
     //     lineNameEl.innerText = "测试服60"
     //     myFrame.src = "http://testv61.chonglaoban.com.cn/"
     // }
-    // else if (currLine == 9) {
-    //     lineNameEl.innerText = "t66"
-    //     myFrame.src = "http://t66.chonglaoban.cn/"
-    // }
-    // else if (currLine == 10) {
-    //     lineNameEl.innerText = "v110"
-    //     myFrame.src = "http://v110.chonglaoban.cn/"
-    // }
-    // else if (currLine == 11) {
-    //     lineNameEl.innerText = "localhost"
-    //     myFrame.src = "http://localhost:8080"
-    // }
+    else if (currLine == 9) {
+        lineNameEl.innerText = "t66"
+        myFrame.src = "http://t66.chonglaoban.cn/"
+    }
+    else if (currLine == 10) {
+        lineNameEl.innerText = "v110"
+        myFrame.src = "http://v110.chonglaoban.cn/"
+    }
+    else if (currLine == 11) {
+        lineNameEl.innerText = "localhost"
+        myFrame.src = "http://localhost:8080"
+    }
     // else if (currLine == 12) {
     //     lineNameEl.innerText = "https-v7.0"
     //     myFrame.src = "https://v70.chonglaoban.cn/"
