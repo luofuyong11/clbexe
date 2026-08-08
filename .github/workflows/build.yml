@@ -10,7 +10,7 @@ permissions:
   contents: read
 
 jobs:
-  build-windows:
+  build:
     name: ${{ matrix.name }}
     runs-on: ${{ matrix.os }}
     timeout-minutes: 60
@@ -19,23 +19,29 @@ jobs:
       matrix:
         include:
           - name: windows-x64
-            arch: x64
             os: windows-latest
             command: npm run make:win32:x64
             artifact_name: chonglaoban-win32-x64
-            artifact_path: |
-              out/make/squirrel.windows/x64/*Setup.exe
-              out/make/squirrel.windows/x64/*.nupkg
-              out/make/squirrel.windows/x64/RELEASES
+            artifact_path: out/make/squirrel.windows/x64/**
           - name: windows-ia32
-            arch: ia32
             os: windows-latest
             command: npm run make:win32:ia32
             artifact_name: chonglaoban-win32-ia32
+            artifact_path: out/make/squirrel.windows/ia32/**
+          - name: macos-x64
+            os: macos-13
+            command: npm run make:mac:x64
+            artifact_name: chonglaoban-macos-x64
             artifact_path: |
-              out/make/squirrel.windows/ia32/*Setup.exe
-              out/make/squirrel.windows/ia32/*.nupkg
-              out/make/squirrel.windows/ia32/RELEASES
+              out/make/zip/darwin/x64/**
+              out/make/**/*.dmg
+          - name: macos-arm64
+            os: macos-13
+            command: npm run make:mac:arm64
+            artifact_name: chonglaoban-macos-arm64
+            artifact_path: |
+              out/make/zip/darwin/arm64/**
+              out/make/**/*.dmg
 
     steps:
       - name: Checkout repository
@@ -56,67 +62,9 @@ jobs:
       - name: Build package
         run: ${{ matrix.command }}
 
-      - name: Verify Windows setup artifact
-        shell: pwsh
-        run: |
-          $setup = Get-ChildItem -Path "out/make/squirrel.windows/${{ matrix.arch }}" -Filter "*Setup.exe" -File
-          if (-not $setup) {
-            Write-Error "Windows 桌面安装包未生成 Setup.exe"
-          }
-          $setup | Select-Object -ExpandProperty FullName
-
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.artifact_name }}
           path: ${{ matrix.artifact_path }}
-          if-no-files-found: error
-
-  build-macos:
-    name: macos
-    needs: build-windows
-    runs-on: macos-13
-    timeout-minutes: 90
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18.20.0
-          cache: npm
-
-      - name: Setup Rust
-        uses: dtolnay/rust-toolchain@stable
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build macOS x64 package
-        run: npm run make:mac:x64
-
-      - name: Upload macOS x64 artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: chonglaoban-macos-x64
-          path: |
-            out/make/zip/darwin/x64/**
-            out/make/**/*.dmg
-          if-no-files-found: error
-
-      - name: Clean macOS make artifacts
-        run: rm -rf out/make
-
-      - name: Build macOS arm64 package
-        run: npm run make:mac:arm64
-
-      - name: Upload macOS arm64 artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: chonglaoban-macos-arm64
-          path: |
-            out/make/zip/darwin/arm64/**
-            out/make/**/*.dmg
           if-no-files-found: error

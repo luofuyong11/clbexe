@@ -19,8 +19,6 @@
     "make": "npm run make:win32:ia32",
     "make:win32:ia32": "node scripts/ensure-electron-binary.js && npm run build:rust:win32:ia32 && node scripts/run-forge.js make --platform=win32 --arch=ia32",
     "make:win32:x64": "node scripts/ensure-electron-binary.js && npm run build:rust:win32:x64 && node scripts/run-forge.js make --platform=win32 --arch=x64",
-    "installer:win32:ia32": "npm run make:win32:ia32",
-    "installer:win32:x64": "npm run make:win32:x64",
     "make:mac:x64": "node scripts/ensure-electron-binary.js && npm run build:rust:mac:x64 && node scripts/run-forge.js make --platform=darwin --arch=x64",
     "make:mac:arm64": "node scripts/ensure-electron-binary.js && npm run build:rust:mac:arm64 && node scripts/run-forge.js make --platform=darwin --arch=arm64"
   },
