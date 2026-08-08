@@ -38,7 +38,6 @@ async function main() {
         perMachine: false,
         allowElevation: true,
         allowToChangeInstallationDirectory: true,
-        differentialPackage: false,
         artifactName: 'chonglaoban-Installer-${arch}.${ext}',
         installerIcon: existsSync(iconPath) ? iconPath : undefined,
         uninstallerIcon: existsSync(iconPath) ? iconPath : undefined,
