@@ -32,6 +32,7 @@ function resolveIconPath(targetPlatform) {
 
 const targetPlatform = resolveTargetPlatform()
 const iconPath = resolveIconPath(targetPlatform)
+const windowsSetupIconPath = targetPlatform === 'win32' && iconPath ? `${iconPath}.ico` : undefined
 const nativeModulesPath = path.join(__dirname, 'native-modules')
 
 module.exports = {
@@ -49,7 +50,13 @@ module.exports = {
   makers: [
     {
       name: '@electron-forge/maker-squirrel',
-      config: {},
+      config: {
+        name: 'chonglaoban',
+        authors: 'chonglaoban',
+        exe: 'chonglaoban.exe',
+        setupExe: 'chonglaoban-Setup.exe',
+        setupIcon: windowsSetupIconPath,
+      },
     },
     {
       name: '@electron-forge/maker-zip',
