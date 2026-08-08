@@ -19,10 +19,8 @@
     "make": "npm run make:win32:ia32",
     "make:win32:ia32": "node scripts/ensure-electron-binary.js && npm run build:rust:win32:ia32 && node scripts/run-forge.js make --platform=win32 --arch=ia32",
     "make:win32:x64": "node scripts/ensure-electron-binary.js && npm run build:rust:win32:x64 && node scripts/run-forge.js make --platform=win32 --arch=x64",
-    "installer:win32:ia32": "node scripts/ensure-electron-binary.js && npm run build:rust:win32:ia32 && node scripts/run-forge.js package --platform=win32 --arch=ia32 && node scripts/build-nsis-installer.js --arch=ia32",
-    "installer:win32:x64": "node scripts/ensure-electron-binary.js && npm run build:rust:win32:x64 && node scripts/run-forge.js package --platform=win32 --arch=x64 && node scripts/build-nsis-installer.js --arch=x64",
-    "dist:win32:ia32": "node scripts/build-win-artifacts.js --arch=ia32",
-    "dist:win32:x64": "node scripts/build-win-artifacts.js --arch=x64",
+    "installer:win32:ia32": "npm run make:win32:ia32",
+    "installer:win32:x64": "npm run make:win32:x64",
     "make:mac:x64": "node scripts/ensure-electron-binary.js && npm run build:rust:mac:x64 && node scripts/run-forge.js make --platform=darwin --arch=x64",
     "make:mac:arm64": "node scripts/ensure-electron-binary.js && npm run build:rust:mac:arm64 && node scripts/run-forge.js make --platform=darwin --arch=arm64"
   },
@@ -43,8 +41,7 @@
     "@electron-forge/maker-rpm": "^6.0.5",
     "@electron-forge/maker-squirrel": "^6.0.5",
     "@electron-forge/maker-zip": "^6.0.5",
-    "electron": "^12.2.3",
-    "electron-builder": "^26.15.3"
+    "electron": "^12.2.3"
   },
   "dependencies": {
     "body-parser": "^1.20.2",

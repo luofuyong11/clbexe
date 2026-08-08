@@ -13,7 +13,7 @@ jobs:
   build-windows:
     name: ${{ matrix.name }}
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 75
+    timeout-minutes: 60
     strategy:
       fail-fast: false
       matrix:
@@ -21,23 +21,21 @@ jobs:
           - name: windows-x64
             arch: x64
             os: windows-latest
-            command: npm run dist:win32:x64
+            command: npm run make:win32:x64
             artifact_name: chonglaoban-win32-x64
             artifact_path: |
               out/make/squirrel.windows/x64/*Setup.exe
               out/make/squirrel.windows/x64/*.nupkg
               out/make/squirrel.windows/x64/RELEASES
-              out/make/nsis/x64/*.exe
           - name: windows-ia32
             arch: ia32
             os: windows-latest
-            command: npm run dist:win32:ia32
+            command: npm run make:win32:ia32
             artifact_name: chonglaoban-win32-ia32
             artifact_path: |
               out/make/squirrel.windows/ia32/*Setup.exe
               out/make/squirrel.windows/ia32/*.nupkg
               out/make/squirrel.windows/ia32/RELEASES
-              out/make/nsis/ia32/*.exe
 
     steps:
       - name: Checkout repository
@@ -58,19 +56,14 @@ jobs:
       - name: Build package
         run: ${{ matrix.command }}
 
-      - name: Verify Windows installer artifacts
+      - name: Verify Windows setup artifact
         shell: pwsh
         run: |
           $setup = Get-ChildItem -Path "out/make/squirrel.windows/${{ matrix.arch }}" -Filter "*Setup.exe" -File
           if (-not $setup) {
-            Write-Error "Windows Squirrel Setup.exe 未生成"
-          }
-          $wizard = Get-ChildItem -Path "out/make/nsis/${{ matrix.arch }}" -Filter "*.exe" -File
-          if (-not $wizard) {
-            Write-Error "Windows 可选安装路径的向导安装器未生成"
+            Write-Error "Windows 桌面安装包未生成 Setup.exe"
           }
           $setup | Select-Object -ExpandProperty FullName
-          $wizard | Select-Object -ExpandProperty FullName
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
