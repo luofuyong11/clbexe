@@ -39,7 +39,7 @@
     "@electron-forge/maker-rpm": "^6.0.5",
     "@electron-forge/maker-squirrel": "^6.0.5",
     "@electron-forge/maker-zip": "^6.0.5",
-    "electron": "^12.2.3"
+    "electron": "^43.4.0"
   },
   "dependencies": {
     "body-parser": "^1.20.2",
